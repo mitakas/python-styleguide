@@ -1,0 +1,236 @@
+% this is a presentation
+\documentclass{beamer}
+
+\mode<presentation>{
+	% center title
+	\setbeamertemplate{frametitle}{
+	  %\centering
+	  \smallskip
+	  \insertframetitle\par
+	  \smallskip
+	}
+
+	% remove controls
+	\setbeamertemplate{navigation symbols}{}
+
+	% set page number
+	\setbeamertemplate{footline}[frame number]
+
+	% remove space from caption
+	\setbeamertemplate{caption label separator}{: }
+
+	% use bullets for lists
+	\setbeamertemplate{itemize item}{$\bullet$}
+
+	% number the entries in the bibliography
+	\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+	% caption without 'Figure:'
+	%\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+	\setbeamertemplate{caption}{%
+      \begin{beamercolorbox}[wd=.9\textwidth, sep=.2ex]{block body}%
+        \centering%
+	    \insertcaption%
+      \end{beamercolorbox}%
+  }
+
+	% define some colors
+	\colorlet{dark-blue}{blue!70!black}
+
+	\setbeamercolor{frametitle}{fg=dark-blue}
+	\setbeamercolor{normal text}{fg=black}
+	\setbeamercolor{itemize item}{fg=dark-blue}
+	\setbeamercolor{page number in head/foot}{fg=black}
+
+	\setbeamerfont{title}{series=\bfseries,parent=structure}
+
+	% block, light blue
+	\setbeamercolor{block title}{bg=blue!20,fg=black}
+	\setbeamercolor{block body}{bg=blue!5}
+
+	% exampleblock, light green
+	\setbeamercolor{block title example}{bg=green!20,fg=black}
+	\setbeamercolor{block body example}{bg=green!5}
+
+	% alertblock, light green
+	\setbeamercolor{block title alerted}{bg=red!20,fg=black}
+	\setbeamercolor{block body alerted}{bg=red!5}
+}
+
+% wow, wide slide
+\newcommand\wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+    \raggedright#2
+  \end{minipage}%
+}}
+
+% set english as the language
+\usepackage[ngerman]{babel}
+
+% use utf-8 characters
+\usepackage[utf8]{inputenc}
+
+% use a more modern font
+\usepackage{cmbright, lmodern, textcomp}
+
+% including graphics
+\usepackage{graphicx}
+
+% colors
+\usepackage{xcolor}
+
+% drawing
+\usepackage{tikz}
+\usetikzlibrary{fadings}
+\tikzfading[name=fade out,
+  inner color=transparent!0,
+  outer color=transparent!10]
+
+% better typography
+\usepackage{microtype}
+
+% better tables
+\usepackage{booktabs}
+
+% source code listing
+\usepackage{listings}
+
+% code highlighting
+\usepackage{minted}
+\usemintedstyle{pastie}
+\renewcommand{\theFancyVerbLine}{\ttfamily \textcolor[gray]{0.5}{\tiny \arabic{FancyVerbLine}}}
+
+% bibliography
+\usepackage{csquotes}
+
+% add clickable links
+\usepackage{hyperref}
+
+% title, etc.
+\title{Python Styleguide}
+\author{Dimitar Dimitrov}
+\date{\today}
+
+\begin{document}
+
+% -- title
+\begin{frame}[plain]
+  \titlepage
+  \vfill
+\end{frame}
+
+\begin{frame}{Zweck und Sinn eines Styleguides}
+  \begin{itemize}
+    \item Zweck
+    \begin{itemize}
+      \item Konsistenz
+      \item Programme erzeugen, die leicht
+      \begin{itemize}
+        \item zu \textbf{lesen},
+        \item zu \textbf{verstehen},
+        \item und zu \textbf{ändern} sind
+      \end{itemize}
+    \end{itemize}
+    \item Zielgruppe
+    \begin{itemize}
+      \item Entwickler
+    \end{itemize}
+    \item Ansatz
+    \begin{itemize}
+      \item Richtlinien
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Styleguides und Python}
+  \begin{itemize}
+    \item Python Enhancement Proposals (PEPs)
+      \begin{itemize}
+        \item \url{https://www.python.org/dev/peps/}
+      \end{itemize}
+    \item PEP~8 -- Style Guide for Python Code
+      \begin{itemize}
+        \item \url{https://www.python.org/dev/peps/pep-0008/}
+        \item Code wird viel öfter gelesen als geschrieben
+        \item Es gibt Gründe, die Richtlinien zu ignorieren
+      \end{itemize}
+    \item PEP~20 -- The Zen of Python
+      \begin{itemize}
+        \item \url{https://www.python.org/dev/peps/pep-0020/}
+        \item \mintinline{python}{import this}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{pep8 vs. PEP~8}
+  \begin{itemize}
+    \item \texttt{pep8} ist ein Werkzeugt, das Code nach den Richtlinien in PEP~8 überprüft.
+    \item \texttt{pep8} heißt inzwischen \texttt{pycodestyle}
+    \item \mintinline{bash}{pycodestyle --show-source --show-pep8 FILE}
+    \item \mintinline{bash}{pycodestyle --statistics -qq FOLDER}
+    \item In Python-Projekte über \texttt{setup.cfg} konfiguierbar
+    \begin{itemize}
+      \item
+\begin{minted}{yaml}
+[pycodestyle]
+ignore = E226,E302,E41
+max-line-length = 160
+\end{minted}
+    \end{itemize}
+    \item Mittels \mintinline{python}{# noqa} direkt in Code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Beyond PEP~8}
+  \begin{itemize}
+    \item Python Code Quality Authority
+    \begin{itemize}
+      \item \url{https://github.com/PyCQA}
+      \item Werkzeuge zum Überprüfen der Qualität von Python Quellcode
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Pyflakes, Flake8, Pylint}
+  \begin{itemize}
+    \item Pyflakes
+      \begin{itemize}
+        \item \url{https://github.com/PyCQA/pyflakes}
+        \item Prüft Python Quellcode nach Fehler
+        \item Prüft den Still des Codes \textbf{nicht}.
+      \end{itemize}
+    \item \textbf{Flake8}
+      \begin{itemize}
+        \item \url{https://gitlab.com/pycqa/flake8}
+        \item \url{http://flake8.pycqa.org/en/latest/}
+        \item Kombiniert Pyflakes und pycodestyle
+      \end{itemize}
+    \item Pylint
+      \begin{itemize}
+        \item \url{https://github.com/PyCQA/pylint}
+        \item Analysiert Python Quellcode
+        \item \texttt{pyreverse} generiert UML-Diagramme
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Empfehlungen}
+\begin{itemize}
+  \item Styleguide als formales Dokument
+  \begin{itemize}
+    \item Titel, Author, Datum, Version
+    \item Inhaltsverzeichnis
+    \item Liste der Änderungen mit Datum
+    \item Seitennummer
+    \item Beispiele
+  \end{itemize}
+  \item \texttt{pycodestyle}/\texttt{Flake8} und Git
+  \begin{itemize}
+    \item \mintinline{bash}{flake8 --install-hook git}
+    \item \mintinline{bash}{git config --bool flake8.strict true}
+  \end{itemize}
+\end{itemize}
+\end{frame}
+
+\end{document}

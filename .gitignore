@@ -1,0 +1,8 @@
+_minted-styleguide
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
